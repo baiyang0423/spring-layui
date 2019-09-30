@@ -1,0 +1,48 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <p>修改密码</p>
+                </div>
+                <div class="layui-card-body">
+                    <form id="edit_passwor_form" class="layui-form" action="">
+                        <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">原密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="title" lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">新密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="code" lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">确认密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="code" lay-verify="required" placeholder="确认新密码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="user_add_submit" id="user_add_submit">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重  置</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+<style scoped>
+
+</style>

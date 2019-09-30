@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.cultivate.webtop.dao.mapper.SysFunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.bw.cultivate.webtop.dao.entity.SysFunction" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="lev" property="lev" jdbcType="VARCHAR" />
+    <result column="is_html" property="isHtml" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_function
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bw.cultivate.webtop.dao.entity.SysFunction" >
+    insert into sys_function (id, title, code, 
+      url, path, icon, lev, 
+      is_html)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{lev,jdbcType=VARCHAR}, 
+      #{isHtml,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.bw.cultivate.webtop.dao.entity.SysFunction" >
+    update sys_function
+    set title = #{title,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      lev = #{lev,jdbcType=VARCHAR},
+      is_html = #{isHtml,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, title, code, url, path, icon, lev, is_html
+    from sys_function
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, code, url, path, icon, lev, is_html,parent_id
+    from sys_function
+  </select>
+
+
+
+
+
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.bw.cultivate.webtop.ai.authitor.DTO.SysFunctionDTO">
+    SELECT  COUNT(1) FROM (
+    SELECT * FROM sys_function  WHERE 1 = 1
+    <if test="title != null and title != ''">AND name LIKE #{title} </if>
+    ) a
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.bw.cultivate.webtop.ai.authitor.DTO.SysFunctionDTO">
+    select *
+    from sys_function
+    WHERE 1 = 1
+    <if test="title != null and title != ''"> AND name LIKE concat('%',#{title},'%') </if>
+    LIMIT #{page} ,#{limit}
+  </select>
+  
+  
+  <select id="selectIndexData" resultMap="BaseResultMap" >
+      select id, title, code, url, path, icon, lev, is_html
+      FROM  sys_function
+      WHERE is_html = 'yes'
+  </select>
+
+</mapper>
