@@ -204,7 +204,7 @@ layui.define(mods, function(exports) {
                       if (!obj.hasChild) {
                           var data = obj.data;
                           var href = data.href;
-                          console.info(href);
+                          // console.info(href);
                           var layid = data.layid;
                           that.addTab(href, layid);
                       }
