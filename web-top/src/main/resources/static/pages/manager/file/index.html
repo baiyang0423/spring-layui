@@ -1,0 +1,179 @@
+
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" style="height: 110px;">
+            <div class="layui-form-item" style="padding-top: 15px;">
+                <div class="layui-inline layui-col-lg3">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-lg3">
+                    <label class="layui-form-label">发帖人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="poster" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-lg3">
+                    <label class="layui-form-label">发帖内容</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="content" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-lg3">
+                    <label class="layui-form-label">帖子状态</label>
+                    <div class="layui-input-block">
+                        <select name="top">
+                            <option value="0">正常</option>
+                            <option value="1">置顶</option>
+                            <option value="2">封禁</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-lg3">
+                    <button class="layui-btn layuiadmin-btn-forum-list" lay-submit lay-filter="LAY-app-forumlist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                    <button class="layui-btn layuiadmin-btn-forum-list" lay-submit lay-filter="LAY-app-forumlist-reset">
+                        <i class="layui-icon">&#xe9aa;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <!--<div style="padding-bottom: 10px;">-->
+                <!--<button class="layui-btn layuiadmin-btn-forum-list" data-type="batchdel">删除</button>-->
+            <!--</div>-->
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="setAdd">新增菜单</button>
+                </div>
+            </script>
+
+            <table id="lay-magager-file-list" lay-filter="lay-magager-file-list"></table>
+            <script type="text/html" id="imgTpl">
+                <img style="display: inline-block; width: 30%; height: 100%;" src="../../../web-top/pub-ui/images/icon/icon.jpg">
+            </script>
+            <script type="text/html" id="buttonTpl">
+                {{#  if(d.top == true){ }}
+                <button class="layui-btn layui-btn-xs">已置顶</button>
+                {{#  } else { }}
+                <button class="layui-btn layui-btn-primary layui-btn-xs">正常显示</button>
+                {{#  } }}
+            </script>
+
+            <script type="text/html" id="switchTpl">
+                <!-- 这里的 checked 的状态只是演示 -->
+                <input type="checkbox" name="sex" value="{{d.lev}}" lay-skin="switch" lay-text="展示|隐藏" lay-filter="sexDemo" {{ d.lev == 2 ? 'checked' : '' }}>
+            </script>
+
+            <script type="text/html" id="checkboxTpl">
+                <!-- 这里的 checked 的状态只是演示 -->
+                <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo" {{ d.lev == 0 ? 'checked' : '' }}>
+            </script>
+
+            <script type="text/html" id="table-forum-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+
+
+
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['table'], function(){
+        var $ = layui.$
+            ,form = layui.form
+            ,table = layui.table;
+
+        form.render();
+
+
+        //初始化表格
+        table.render({
+            elem: '#lay-magager-file-list'
+            ,url:'/web-top/sys/function/select/page'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,title: '用户数据表'
+            ,page: true
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'title',  title: '标题'}
+                ,{field:'code',  title: '代码'}
+                ,{field:'url',   width: '10%',title: '路径'}
+                ,{field:'path', title: '地址' } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'imgTpl', templet: '#imgTpl',   title: '图标'}
+                ,{field:'lev',  title: '等级'}
+                ,{field:'show', templet: '#switchTpl',  title: '展示页面'}
+                ,{field:'lock', templet: '#checkboxTpl',  title: '锁定'}
+                ,{fixed: 'right', title:'操作', toolbar: '#table-forum-list', width:150}
+            ]]
+            ,done: function () {
+                $("[data-field='id']").css('display','none');
+            }
+
+            ,where:{  "title":""  }
+            , done: function (res) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            }
+        });
+
+        //监听搜索
+        form.on('submit(LAY-app-forumlist-search)', function(data){
+            var field = data.field;
+
+            console.info(field);
+            //执行重载
+            table.reload('LAY-app-forum-list', {
+                where: field
+            });
+        });
+
+        //事件
+        var active = {
+            batchdel: function(){
+                var checkStatus = table.checkStatus('LAY-app-forum-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                    return layer.msg('请选择数据');
+                }
+
+                layer.confirm('确定删除吗？', function(index) {
+
+                    //执行 Ajax 后重载
+                    /*
+                    admin.req({
+                      url: 'xxx'
+                      //,……
+                    });
+                    */
+                    table.reload('LAY-app-forum-list');
+                    layer.msg('已删除');
+                });
+            }
+        }
+
+        $('.layui-btn.layuiadmin-btn-forum-list').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+
+</script>
