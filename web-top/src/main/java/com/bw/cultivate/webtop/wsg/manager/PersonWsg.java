@@ -1,7 +1,7 @@
 package com.bw.cultivate.webtop.wsg.manager;
 
 import com.bw.cultivate.webtop.util.result.WsgResult;
-import com.bw.cultivate.webtop.util.upload.FileUtils;
+//import com.bw.cultivate.webtop.util.upload.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,13 +31,13 @@ public class PersonWsg {
         // 上传成功或者失败的提示
         String msg = "";
 
-        if (FileUtils.upload(file, localPath, file.getOriginalFilename())){
-            // 上传成功，给出页面提示
-            msg = "上传成功！";
-        }else {
-            msg = "上传失败！";
-
-        }
+//        if (FileUtils.upload(file, localPath, file.getOriginalFilename())){
+//            // 上传成功，给出页面提示
+//            msg = "上传成功！";
+//        }else {
+//            msg = "上传失败！";
+//
+//        }
 
 
         log.info("文件上传完成！");
