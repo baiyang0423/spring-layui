@@ -5,6 +5,11 @@ spring:
     username: root
     password: 123456
     driverClassName: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 192.168.200.150
+    port: 5672
+    username: admin
+    password: admin
 
 #   mybatis配置
 mybatis:
