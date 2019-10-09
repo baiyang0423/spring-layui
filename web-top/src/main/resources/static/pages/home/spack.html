@@ -34,25 +34,31 @@
     <h1>JS实现聊天接收到消息语言自动提醒</h1>
     <h3>(您有新的消息请注意查收)</h3>
     <div id="audio_click">
-        <a id="btn_audio" href="#" rel="external nofollow" >播放语音</a>
+        <a id="btn_audio" href="javascript:void(0);" rel="external nofollow" >播放语音</a>
     </div>
-    <div id="audio_play"></div>
+    <div id="audio_play">
+        <audio id="audioPlay">
+            <!--<source src="../../pub-ui/video/mp3/newmsg.ogg" type="audio/ogg">-->
+            <source src="../../pub-ui/video/mp3/newmsg.mp3" type="audio/mpeg">
+            <!--<source src="../../pub-ui/video/mp3/newmsg.wav" type="audio/wav">-->
+        </audio>
+    </div>
 </div>
 </body>
 <script>
     layui.use(['table','layer','jquery','form','laydate','tree'], function(){
         var $ = layui.jquery;
-        var html = '';
-        html += '<audio id="audioPlay">';
-        //格式ogg音频地址
-        html += '<source src="../../pub-ui/video/mp3/newmsg.ogg" type="audio/ogg">';
-        //格式mp3音频地址
-        html += '<source src="../../pub-ui/video/mp3/newmsg.mp3" type="audio/mpeg">';
-        //格式wav音频地址
-        html += '<source src="../../pub-ui/video/mp3/newmsg.wav" type="audio/wav">';
-        html += '</audio>';
-        //将代码写入到页面中
-        $(html).appendTo("#audio_play");
+        // var html = '';
+        // html += '<audio id="audioPlay">';
+        // //格式ogg音频地址
+        // html += '<source src="../../pub-ui/video/mp3/newmsg.ogg" type="audio/ogg">';
+        // //格式mp3音频地址
+        // html += '<source src="../../pub-ui/video/mp3/newmsg.mp3" type="audio/mpeg">';
+        // //格式wav音频地址
+        // html += '<source src="../../pub-ui/video/mp3/newmsg.wav" type="audio/wav">';
+        // html += '</audio>';
+        // //将代码写入到页面中
+        // $(html).appendTo("#audio_play");
         //轮询ajax检测未读消息，每五分钟
 
 
