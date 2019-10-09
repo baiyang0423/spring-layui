@@ -10,6 +10,11 @@ spring:
     port: 5672
     username: admin
     password: admin
+  mail:
+    host: smtp.163.com
+    username: baiyang900423@163.com
+    password: baiyang0423
+    default-encoding: UTF-8
 
 #   mybatis配置
 mybatis:

@@ -26,30 +26,33 @@
 
 <div class="layui-card" >
     <div class="layui-card-body">
-        <button type="button" class="layui-btn">发送</button>
-        <button type="button" class="layui-btn layui-btn-normal">存草稿</button>
-        <div style="width: 80%;padding-left: 50px;padding-top: 20px">
+        <form class="layui-form">
 
-            <div class="layui-inline layui-col-lg12">
-                <label>收件人：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" placeholder="请输入收件人，多个用 ；隔开！" class="layui-input layui-div-text">
+            <button type="button" lay-submit lay-filter="lay-email-send" class="layui-btn" id="lay-email-send">发送</button>
+            <button type="button" lay-submit lay-filter="lay-email-save" class="layui-btn layui-btn-normal">存草稿</button>
+            <div style="width: 80%;padding-left: 50px;padding-top: 20px">
+
+                <div class="layui-inline layui-col-lg12">
+                    <label>收件人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="touser" placeholder="请输入收件人，多个用 ；隔开！" class="layui-input layui-div-text">
+                    </div>
+                </div>
+                <div class="layui-inline layui-col-lg12">
+                    <label>主&emsp;题：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="subject" placeholder="请输入主题！" class="layui-input layui-div-text">
+                    </div>
+                </div>
+                <div style="padding-bottom: 20px;">
+                    <span>添加附件：</span>
+                </div>
+
+                <div style="background-color: white;">
+                    <textarea id="layeditDemo" style="height: 500px;"></textarea>
                 </div>
             </div>
-            <div class="layui-inline layui-col-lg12">
-                <label>主&emsp;题：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" placeholder="请输入主题！" class="layui-input layui-div-text">
-                </div>
-            </div>
-            <div style="padding-bottom: 20px;">
-                <span>添加附件：</span>
-            </div>
-
-            <div style="background-color: white;">
-                <textarea id="layeditDemo" style="height: 500px;"></textarea>
-            </div>
-        </div>
+        </form>
 
     </div>
 </div>
@@ -58,13 +61,14 @@
 
 
 <script>
-    layui.use(['layedit', 'layer', 'jquery'], function () {
-        var $ = layui.jquery;
-        var layedit = layui.layedit;
+    layui.use(['layedit', 'form', 'jquery'], function () {
+
+        var $ = layui.jquery,layedit = layui.layedit , form = layui.form;
+
         layedit.set({
             //暴露layupload参数设置接口 --详细查看layupload参数说明
             uploadImage: {
-                url: '/Attachment/LayUploadFile',
+                url: '/web-top/manager/user/person/file/upload',
                 accept: 'image',
                 acceptMime: 'image/*',
                 exts: 'jpg|png|gif|bmp|jpeg',
@@ -98,5 +102,53 @@
             , height: '90%'
         });
         var ieditor = layedit.build('layeditDemo');
+
+        //发送邮件按钮
+        form.on('submit(lay-email-send)',function(){
+            var content = layedit.getContent(ieditor);
+
+
+            console.info(content);
+
+            var param = {
+                to : $("input[name='touser']").val(),
+                subject : $("input[name='subject']").val(),
+                content : content
+            }
+
+            $.ajax({
+                url:"/web-top/email/send",
+                type:'post',
+                data:JSON.stringify(param),
+                contentType: 'application/json',
+                beforeSend:function () {
+                    this.layerIndex = layer.load(1, { shade: [0.1,'#fff'] });
+                },
+                success:function(data){
+                    if(data.code == '0'){
+                        layer.msg("邮件已发送", {
+                            icon: 6,//成功的表情
+                            time: 1000 //1秒关闭（如果不配置，默认是3秒）
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon: 5});//失败的表情
+                        return;
+                    }
+                },
+                complete: function () {
+                    layer.close(this.layerIndex);
+                },
+            });
+        })
+
+
+        //保存草稿
+        form.on('submit(lay-email-save)',function(){
+
+        })
+
+
+
+
     })
 </script>
