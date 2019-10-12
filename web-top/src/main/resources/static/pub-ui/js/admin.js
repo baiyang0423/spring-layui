@@ -116,7 +116,7 @@ layui.define(mods, function(exports) {
       });
 
       // 注入mock
-      layui.mockjs.inject(APIs);
+      // layui.mockjs.inject(APIs);
 
       // 初始化渲染
       if (config.loadType === 'SPA') {
