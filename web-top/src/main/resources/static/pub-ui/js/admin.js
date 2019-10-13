@@ -61,7 +61,7 @@ layui.define(mods, function(exports) {
       _private.menuInit(config);
       // 跳转至首页
       if (location.hash === '') {
-          utils.setUrlState('主页', '#/');
+          utils.setUrlState('主页', '#/head/index');
       }
 
 
@@ -70,7 +70,7 @@ layui.define(mods, function(exports) {
       layui.sidebar.render({
           elem: '#ccleft',
           //content:'',
-          title: '基础列表',
+          title: '通讯录',
           shade: true,
           // shadeClose:false,
           direction: 'left',
@@ -147,21 +147,6 @@ layui.define(mods, function(exports) {
           // 配置路由
           var routeOpts = {
 
-              // name: 'kitadmin',
-              r: [{
-                  path: '/user/index',
-                  component: '/views/user/index.html',
-                  name: '用户列表',
-                  children: [{
-                      path: '/user/create',
-                      component: 'views/user/create.html',
-                      name: '新增用户',
-                  }, {
-                      path: '/user/edit',
-                      component: 'views/user/edit.html',
-                      name: '编辑用户',
-                  }]
-              }],
               routes: menuData
           };
           if (config.loadType === 'TABS') {
@@ -230,7 +215,7 @@ layui.define(mods, function(exports) {
           }).render(function(obj) {
               // 如果只有首页的选项卡
               if (obj.isIndex) {
-                  route.render('#/');
+                  route.render('#/head/index');
               }
           });
       }
