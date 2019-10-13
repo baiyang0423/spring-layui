@@ -260,35 +260,14 @@
     </div>
   </div>
 </div>
+<!-- 消息推送组件-->
+<script src="../../pub-ui/js/notice.js"></script>
+
 <script>
-  layui.use(['jquery', 'mockjs','notice', 'table'], function() {
+  layui.use(['jquery', 'mockjs', 'table'], function() {
 
-    var $ = layui.jquery, table = layui.table ,notice = layui.notice;
+    var $ = layui.jquery, table = layui.table ;
 
-
-      /**
-       * 提示组件
-       */
-      // 初始化配置，同一样式只需要配置一次，非必须初始化，有默认配置
-      notice.options = {
-          closeButton:true,//显示关闭按钮
-          debug:false,//启用debug
-          positionClass:"toast-top-right",//弹出的位置,
-          showDuration:"300",//显示的时间
-          hideDuration:"1000",//消失的时间
-          timeOut:"2000",//停留的时间
-          extendedTimeOut:"1000",//控制时间
-          showEasing:"swing",//显示时的动画缓冲方式
-          hideEasing:"linear",//消失时的动画缓冲方式
-          iconClass: 'toast-info', // 自定义图标，有内置，如不需要则传空 支持layui内置图标/自定义iconfont类名
-          onclick: null, // 点击关闭回调
-      };
-
-
-      notice.warning("成功");
-      notice.info("提示信息：毛都没有...");
-      notice.error("大佬，我咋知道怎么肥四！");
-      notice.success("大佬，我咋知道怎么肥四！");
 
 
     var intervalIndex = setInterval(function() {
