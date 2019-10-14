@@ -43,6 +43,17 @@
               <span>帮助</span>
             </a>
           </li>
+          <li class="kit-item" kit-target="message">
+            <a href="#/home/messasge">
+              <i class="layui-icon">&#xe667;</i>
+                <span class="layui-badge">66</span>
+              <script type="text/html" lay-url="../../js/framwork/message.js">
+                {{# if(d.data.newmsg){ }}
+                <span class="layui-badge-dot"></span>
+                {{# } }}
+              </script>
+            </a>
+          </li>
           <li class="kit-item" id="ccleft">
             <a href="javascript:;">
               <i class="layui-icon">&#xe60e;</i>
