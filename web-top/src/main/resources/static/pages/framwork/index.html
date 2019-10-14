@@ -9,38 +9,84 @@
   <link rel="stylesheet" href="../../pub-ui/lib/layui/css/layui.css">
   <link rel="stylesheet" href="../../pub-ui/css/theme/default.css" id="theme">
   <link rel="stylesheet" href="../../pub-ui/css/nprogress.css">
-    <link rel="stylesheet" href="../../pub-ui/css/template.css" media="all">
+  <link rel="stylesheet" href="../../pub-ui/css/template.css" media="all">
   <!-- endbuild -->
 </head>
+<style>
+
+  .textMarquee{
+    float:left;
+    width:280px;
+    color: yellow;
+  }
+
+
+</style>
 
 <body class="layui-layout-body kit-theme-default">
   <div class="layui-layout layui-layout-admin">
     <!-- header -->
     <div class="layui-header">
-      <div class="layui-logo">
-        <div class="layui-logo-toggle" kit-toggle="side" data-toggle="on">
-          <i class="layui-icon">&#xe65a;</i>
+        <div class="layui-logo">
+            <div class="layui-logo-toggle" kit-toggle="side" data-toggle="on">
+                <i class="layui-icon">&#xe65a;</i>
+            </div>
+            <div class="layui-logo-brand">
+                <a href="#/">后台管理系统 1.0</a>
+            </div>
         </div>
-        <div class="layui-logo-brand">
-          <a href="#/">后台管理系统 1.0</a>
-        </div>
-      </div>
-      <div class="layui-layout-left">
-        <!-- <div class="kit-search">
-          <form action="/">
-            <input type="text" name="keyword" class="kit-search-input" placeholder="关键字..." />
-            <button class="kit-search-btn" title="搜索" type="submit">
-              <i class="layui-icon">&#xe615;</i>
-            </button>
-          </form>
-        </div> -->
+        <div class="layui-layout-left">
+          <!-- <div class="kit-search">
+            <form action="/">
+              <input type="text" name="keyword" class="kit-search-input" placeholder="关键字..." />
+              <button class="kit-search-btn" title="搜索" type="submit">
+                <i class="layui-icon">&#xe615;</i>
+              </button>
+            </form>
+          </div> -->
+
+            <!-- 天气信息 -->
+            <div style="padding-top: 5px;">
+                <div id="tp-weather-widget"></div>
+                <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+                <script>tpwidget("init", {
+                    "flavor": "slim",
+                    "location": "WX4FBXXFKE4F",
+                    "geolocation": "enabled",
+                    "language": "zh-chs",
+                    "unit": "c",
+                    "theme": "chameleon",
+                    "container": "tp-weather-widget",
+                    "bubble": "disabled",
+                    "alarmType": "badge",
+                    "color": "#FFFFFF",
+                    "uid": "U9EC08A15F",
+                    "hash": "039da28f5581f4bcb5c799fb4cdfb673"
+                });
+                tpwidget("show");</script>
+            </div>
+
       </div>
       <div class="layui-layout-right">
         <ul class="kit-nav" lay-filter="header_right">
+          <li class="kit-item textMarquee">
+            <marquee>通知：今天，明天，后天，开始大幅降温了，请不要傻不愣登的，只要风度不要温度，再把自己弄感冒喽！</marquee>
+          </li>
           <li class="kit-item" kit-target="help">
             <a href="javascript:;">
               <i class="layui-icon">&#xe607;</i>
               <span>帮助</span>
+            </a>
+          </li>
+          <li class="kit-item" kit-target="message">
+            <a href="#/home/messasge">
+              <i class="layui-icon">&#xe667;</i>
+                <span class="layui-badge">66</span>
+              <script type="text/html" lay-url="../../js/framwork/message.js">
+                {{# if(d.data.newmsg){ }}
+                <span class="layui-badge-dot"></span>
+                {{# } }}
+              </script>
             </a>
           </li>
           <li class="kit-item" id="ccleft">
