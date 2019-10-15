@@ -41,6 +41,12 @@
               <input type="checkbox" name="rememberMe" value="true" title="记住帐号" lay-skin="primary">
             </div>
           </div>
+
+          <div class="layui-form-item">
+            <div>
+                <div id="slider"></div>
+            </div>
+          </div>
           <div class="kit-login-row">
             <button class="layui-btn kit-login-btn" lay-submit="submit" lay-filter="login_hash">登录</button>
           </div>
@@ -56,18 +62,35 @@
   <script src="./pub-ui/lib/layui/layui.js"></script>
   <script>
     //'axios', 'lodash'
-    layui.use(['layer', 'form'], function() {
+    layui.extend({
+        sliderVerify:'./pub-ui/js/sliderVerify'
+    }).use(['layer', 'form','sliderVerify'], function() {
       var form = layui.form,
         //axios = layui.axios,
-        $ = layui.jquery;
+        $ = layui.jquery ,sliderVerify = layui.sliderVerify;
       //_ = layui.lodash;
 
       $('#forgot').on('click', function() {
         layer.msg('请联系管理员.');
       });
 
+
+      var slider = sliderVerify.render({
+        elem: '#slider',
+        onOk: function(){//当验证通过回调
+            layer.msg("滑块验证通过");
+        }
+      })
+
       //监听提交
       form.on('submit(login_hash)', function(data) {
+
+          if(slider.isOk()){
+              layer.msg(JSON.stringify(data.field));
+          }else{
+              layer.msg("请先通过滑块验证");
+          }
+
         var layIndex = layer.load(2, {
           shade: [0.1, '#393D49']
         });
