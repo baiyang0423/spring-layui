@@ -167,7 +167,9 @@
   <script>
     layui.config({
       base: '../../pub-ui/js/'
-    }).use('admin');
+    }).use(['admin','element'],function(){
+        var element = layui.element;
+    });
   </script>
   <!-- endbuild -->
 </body>
