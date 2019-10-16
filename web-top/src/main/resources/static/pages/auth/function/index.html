@@ -21,21 +21,25 @@
 
         <!-- layui-card-body  -->
         <div class="layui-card-body">
-          <table class="layui-table" id="functionList" lay-filter="functionList"></table>
+            <table class="layui-table" id="functionList" lay-filter="functionList"></table>
 
-        <script type="text/html" id="toolbarDemo">
-          <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-            <button class="layui-btn layui-btn-sm" lay-event="setAdd">新增菜单</button>
-          </div>
-        </script>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="setAdd">新增菜单</button>
+                </div>
+            </script>
 
-        <script type="text/html" id="barDemo">
-          <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-          <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        </script>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+            <script type="text/html" id="iconTpl">
+                <i class="layui-icon">{{d.icon}}</i>
+            </script>
 
         </div>
       </div>
@@ -69,7 +73,7 @@
                 ,{field:'code', width:80, title: '代码'}
                 ,{field:'url', width:100,  width: '30%',title: '路径'}
                 ,{field:'path', title: '地址', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'icon', width: '5%', title: '图标'}
+                ,{field:'icon',templet: '#iconTpl', width: '5%', title: '图标'}
                 ,{field:'lev', width: '5%', title: '等级'}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
             ]]
