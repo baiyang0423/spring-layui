@@ -11,6 +11,7 @@
     <result column="lev" property="lev" jdbcType="VARCHAR" />
     <result column="is_html" property="isHtml" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="order_value" property="orderValue" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from sys_function
@@ -39,10 +40,12 @@
     select id, title, code, url, path, icon, lev, is_html
     from sys_function
     where id = #{id,jdbcType=VARCHAR}
+    order by order_value
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, title, code, url, path, icon, lev, is_html,parent_id
     from sys_function
+    order by order_value
   </select>
 
 
@@ -62,14 +65,16 @@
     from sys_function
     WHERE 1 = 1
     <if test="title != null and title != ''"> AND name LIKE concat('%',#{title},'%') </if>
+     order by order_value
     LIMIT #{page} ,#{limit}
   </select>
   
   
   <select id="selectIndexData" resultMap="BaseResultMap" >
-      select id, title, code, url, path, icon, lev, is_html
+      select id, title, code, url, path, icon, lev, is_html ,order_value
       FROM  sys_function
       WHERE is_html = 'yes'
+      order by order_value
   </select>
 
 </mapper>

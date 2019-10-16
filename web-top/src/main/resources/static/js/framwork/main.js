@@ -8,9 +8,6 @@ layui.use(['table',"layer","jquery","form"], function(){
             //初始化框架菜单
             $("#menu-box").html(_menus);
             // console.info(_menus);
-            //初始化快捷菜单
-            var _quickMenu = QuickMenuData("100001" , res.data);
-            $("#layui-quick-module").html(_quickMenu);
     }, 'json');
 
 
@@ -65,36 +62,6 @@ layui.use(['table',"layer","jquery","form"], function(){
         return newArry;
     };
 
-
-    /**
-     * 初始化快捷菜单
-     * @param pid
-     * @param array
-     * @constructor
-     */
-    function  QuickMenuData(pid ,array){
-        var str = '';
-       for(var i in array){
-           if(array[i].parentId == pid){
-               var path = childArry[i].path;
-               //注意icon，这个空格在idea中不显示，在text中展现，unicode编码
-               var _icon = childArry[i].icon == null ? "":childArry[i].icon;
-               var title = childArry[i].title == null ? "":childArry[i].title;
-
-               str +='<div class="layui-col-xs6 layui-col-sm6 layui-col-md3">\n' ;
-               str +='  <div class="layadmin-shortcut">\n' ;
-               str +='     <a href="#'+path+'" class="layui-quick-menu">\n' ;
-               str +='         <i class="layui-icon layui-icon-template-1"></i>\n' ;
-               str +='         <cite>'+title+'</cite>\n' ;
-               str +='     </a>\n' ;
-               str +='  </div>\n' ;
-               str +='</div>';
-
-           }
-       }
-
-       return str;
-    }
 
 
 
