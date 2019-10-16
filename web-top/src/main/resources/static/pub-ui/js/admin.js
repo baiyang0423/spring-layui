@@ -224,10 +224,10 @@ layui.define(mods, function(exports) {
      * 快捷入口
      * @type {Admin}
      */
-    $('body').on('click', '[data-iframe-tab]', function () {
+    $('body').on('click', '.layui-quick-menu', function () {
         var loading = parent.layer.load(0, {shade: false, time: 2 * 1000});
-        var tabId = $(this).attr('data-iframe-tab'),
-            href = $(this).attr('data-href');
+        var tabId = null,
+            href = $(this).attr('href');
         if (tabId == null || tabId == undefined) {
             tabId = new Date().getTime();
         }
