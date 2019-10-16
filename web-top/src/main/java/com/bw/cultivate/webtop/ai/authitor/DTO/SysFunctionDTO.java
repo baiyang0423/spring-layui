@@ -30,5 +30,7 @@ public class SysFunctionDTO {
 
     private String parentId;
 
+    private Integer orderValue;
+
 
 }

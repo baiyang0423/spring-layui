@@ -32,4 +32,6 @@ public class SysFunctionVO {
 
     private String parentId;
 
+    private Integer orderValue;
+
 }

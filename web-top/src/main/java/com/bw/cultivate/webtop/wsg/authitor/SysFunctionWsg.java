@@ -5,6 +5,7 @@ import com.bw.cultivate.webtop.ai.authitor.DTO.Aoutes;
 import com.bw.cultivate.webtop.ai.authitor.DTO.SysFunctionDTO;
 import com.bw.cultivate.webtop.ai.authitor.ISysFunctionApp;
 import com.bw.cultivate.webtop.util.BeanConvertor;
+import com.bw.cultivate.webtop.util.result.Page;
 import com.bw.cultivate.webtop.util.result.RetCode;
 import com.bw.cultivate.webtop.util.result.WsgResult;
 import com.bw.cultivate.webtop.wsg.authitor.VO.SysFunctionVO;
@@ -39,6 +40,8 @@ public class SysFunctionWsg {
 
         try{
             SysFunctionVO vo = BeanConvertor.mapToObject(params,SysFunctionVO.class);
+
+            vo.setPage(Page.getPage(vo.getPage(),vo.getLimit()));
 
             List<SysFunctionDTO> list = functionApp.selectPage(vo);
 
