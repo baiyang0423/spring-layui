@@ -61,7 +61,7 @@ layui.define(mods, function(exports) {
       _private.menuInit(config);
       // 跳转至首页
       if (location.hash === '') {
-          utils.setUrlState('主页', '#/head/index');
+          utils.setUrlState('主页', '#/');
       }
 
 
@@ -146,7 +146,6 @@ layui.define(mods, function(exports) {
           // });
           // 配置路由
           var routeOpts = {
-
               routes: menuData
           };
           if (config.loadType === 'TABS') {
@@ -215,11 +214,30 @@ layui.define(mods, function(exports) {
           }).render(function(obj) {
               // 如果只有首页的选项卡
               if (obj.isIndex) {
-                  route.render('#/head/index');
+                  route.render('#/');
               }
           });
       }
   }
+
+    /**
+     * 快捷入口
+     * @type {Admin}
+     */
+    $('body').on('click', '[data-iframe-tab]', function () {
+        var loading = parent.layer.load(0, {shade: false, time: 2 * 1000});
+        var tabId = $(this).attr('data-iframe-tab'),
+            href = $(this).attr('data-href');
+        if (tabId == null || tabId == undefined) {
+            tabId = new Date().getTime();
+        }
+        _private.addTab(href,tabId);
+        parent.layer.close(loading);
+    });
+
+
+
+
 
   var admin = new Admin();
   admin.ready(function() {
