@@ -15,4 +15,12 @@ public interface ISysFunctionApp {
     List<Aoutes> selectIndexData();
 
     List<SysFunctionDTO> selectIndexDataAll();
+
+    SysFunctionDTO selectOne(String id);
+
+    void save(SysFunctionDTO dto);
+
+    void update(SysFunctionDTO dto);
+
+    void delete(SysFunctionDTO dto);
 }

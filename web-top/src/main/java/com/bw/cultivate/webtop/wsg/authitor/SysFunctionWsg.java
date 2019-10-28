@@ -10,13 +10,11 @@ import com.bw.cultivate.webtop.util.result.RetCode;
 import com.bw.cultivate.webtop.util.result.WsgResult;
 import com.bw.cultivate.webtop.wsg.authitor.VO.SysFunctionVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName:  SysFunctionWsg
@@ -99,6 +97,7 @@ public class SysFunctionWsg {
     @GetMapping("/sys/function/index/data/all")
     public WsgResult indexDataAll(){
         WsgResult result = new WsgResult();
+
         try{
             List<SysFunctionDTO> list = functionApp.selectIndexDataAll();
             result.setData(list);
@@ -112,6 +111,56 @@ public class SysFunctionWsg {
         return  result;
     }
 
+
+    @GetMapping("/sys/function/select/one")
+    public WsgResult selectOne(@RequestParam String id){
+        System.out.println("id == "+id);
+        WsgResult result = new WsgResult();
+        try{
+            SysFunctionDTO list = functionApp.selectOne(id);
+            result.setData(list);
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+            result.setCode(RetCode.OPERATION_FAIL.getCode());
+            result.setMsg(e.getMessage());
+        }
+
+        return  result;
+    }
+
+    @PostMapping("/sys/function/save")
+    public WsgResult save(@RequestBody SysFunctionDTO dto){
+        WsgResult result = new WsgResult();
+        try{
+            if(StringUtils.isBlank(dto.getId())){
+
+                functionApp.save(dto);
+            }else {
+                functionApp.update(dto);
+            }
+        }catch (Exception e){
+
+            log.error(e.getMessage());
+            result.setCode(RetCode.OPERATION_FAIL.getCode());
+            result.setMsg(e.getMessage());
+        }
+
+        return  result;
+    }
+
+
+    @PostMapping("/sys/function/delete")
+    public WsgResult delete(@RequestBody SysFunctionDTO dto){
+        WsgResult result = new WsgResult();
+        try{
+            functionApp.delete(dto);
+        }catch (Exception e){
+            result.setCode(RetCode.OPERATION_FAIL.getCode());
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 
 
 

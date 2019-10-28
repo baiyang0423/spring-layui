@@ -6,6 +6,7 @@ import com.bw.cultivate.webtop.ai.authitor.ISysFunctionApp;
 import com.bw.cultivate.webtop.dao.entity.SysFunction;
 import com.bw.cultivate.webtop.dao.mapper.SysFunctionMapper;
 import com.bw.cultivate.webtop.util.BeanConvertor;
+import com.bw.cultivate.webtop.util.uuid.UUIDGenerator;
 import com.bw.cultivate.webtop.wsg.authitor.VO.SysFunctionVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,30 @@ public class SysFunctionAppImpl implements ISysFunctionApp{
     public List<SysFunctionDTO> selectIndexDataAll() {
         List<SysFunction> list = functionMapper.selectAll();
         return BeanConvertor.copyList(list,SysFunctionDTO.class ,"");
+    }
+
+    @Override
+    public SysFunctionDTO selectOne(String id) {
+        SysFunction sys = functionMapper.selectByPrimaryKey(id);
+        return BeanConvertor.copy(sys,SysFunctionDTO.class,"");
+    }
+
+    @Override
+    public void save(SysFunctionDTO dto) {
+        dto.setId(UUIDGenerator.create());
+        SysFunction sysFunction = BeanConvertor.copy(dto,SysFunction.class,"");
+        functionMapper.insert(sysFunction);
+
+    }
+
+    @Override
+    public void update(SysFunctionDTO dto) {
+
+    }
+
+    @Override
+    public void delete(SysFunctionDTO dto) {
+        functionMapper.deleteByPrimaryKey(dto.getId());
     }
 
 

@@ -11,7 +11,14 @@
   <link rel="stylesheet" href="../../../pub-ui/css/nprogress.css">
   <!-- endbuild -->
 </head>
-
+<style>
+    .layui-form-item .layui-input-inline{
+        width: 285px;
+    }
+    .layui-form-item .mgr-10{
+        margin-right: 10px;
+    }
+</style>
 <body class="layui-layout-body kit-theme-default">
 
 <div class="layui-fluid">
@@ -19,8 +26,9 @@
         <div class="layui-col-xs12"  style="padding-top: 15px;">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <form id="function_add" class="layui-form" action="" lay-filter="edit_function_form">
+                    <form id="edit_function_form" class="layui-form" action="" lay-filter="edit_function_form">
 
+                        <input type="hidden" name="id" />
                         <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">标题</label>
@@ -35,19 +43,34 @@
                             <div class="layui-form-item">
                             </div>
                             <div class="layui-form-item">
-                              <label class="layui-form-label">路径</label>
-                              <div class="layui-input-block">
-                                <input type="text" name="url"  placeholder="请输入路径" autocomplete="off" class="layui-input">
-                              </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">请求path</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="path" lay-verify="required" placeholder="请输入path" autocomplete="off" class="layui-input">
+                                <label class="layui-form-label">路径</label>
+                                <div class="layui-input-block mgr-10">
+                                    <input type="text" name="url"  lay-verify="required" placeholder="请输入路径" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">搜索选择框</label>
+                                <label class="layui-form-label">请求path</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="path" lay-verify="required" placeholder="请输入path" autocomplete="off" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">图标</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="icon" lay-verify="required" placeholder="请输入图标码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">使用状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="checkbox" lay-filter="switch" name="status" lay-verify="required" lay-skin="switch" lay-text="使用|停用">
+                                </div>
+                                <label class="layui-form-label">是否为页面</label>
+                                <div class="layui-input-inline">
+                                    <input type="radio" name="isHtml" value="no" title="菜单" checked="">
+                                    <input type="radio" name="isHtml" value="yes" title="页面">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">级别</label>
                                 <div class="layui-input-inline">
                                     <select name="lev" lay-verify="required" lay-search="">
                                         <option value="1">一级</option>
@@ -55,16 +78,26 @@
                                         <option value="3">三级</option>
                                     </select>
                                 </div>
-                                <label class="layui-form-label">使用状态</label>
+                                <label class="layui-form-label">显示顺序</label>
                                 <div class="layui-input-inline">
-                                    <input type="checkbox" lay-filter="switch" name="status" lay-skin="switch" lay-text="使用|停用">
+                                    <input type="text" name="orderValue" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">父级菜单</label>
+                                <div class="layui-input-block mgr-10">
+                                    <select name="parentId" lay-verify="required" lay-search="">
+                                        <option value="1">一级</option>
+                                        <option value="2">二级</option>
+                                        <option value="3">三级</option>
+                                    </select>
                                 </div>
                             </div>
 
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="user_add_submit" id="function_edit_submit">立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="edit" id="function_edit_submit">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重  置</button>
                             </div>
                         </div>
@@ -78,42 +111,90 @@
 <script>
   //Demo
   layui.use(['form','jquery'], function() {
-    var form = layui.form ,$ = layui.jquery;
+      var form = layui.form ,$ = layui.jquery;
 
-    form.render();
+      form.render();
 
     //监听提交
-    form.on('submit(user_add_submit)', function(data) {
+      form.on('submit(user_add_submit)', function(data) {
 
-        $.ajax({
-            url:"/web-top/sys/user/save",
-            type:'post',
-            data:JSON.stringify(data.field),
-            contentType: 'application/json',
-            beforeSend:function () {
-                this.layerIndex = layer.load(0, { shade: [0.5, '#393D49'] });
-            },
-            success:function(data){
-                if(data.code == '0'){
-                    layer.msg(data.msg, {
-                        icon: 6,//成功的表情
-                        time: 1000 //1秒关闭（如果不配置，默认是3秒）
-                    }, function(){
-                        parent.layer.close(index); //关闭父级弹窗
-                        window.parent.location.reload();//操作成功后刷新父界面
-                    });
-                }else{
-                    layer.msg(data.msg,{icon: 5});//失败的表情
-                    return;
-                }
-            },
-            complete: function () {
-                layer.close(this.layerIndex);
-            },
-        });
+          $.ajax({
+              url:"/web-top/sys/user/save",
+              type:'post',
+              data:JSON.stringify(data.field),
+              contentType: 'application/json',
+              beforeSend:function () {
+                  this.layerIndex = layer.load(0, { shade: [0.5, '#393D49'] });
+              },
+              success:function(data){
+                  if(data.code == '0'){
+                      layer.msg(data.msg, {
+                          icon: 6,//成功的表情
+                          time: 1000 //1秒关闭（如果不配置，默认是3秒）
+                      }, function(){
+                          parent.layer.close(index); //关闭父级弹窗
+                          window.parent.location.reload();//操作成功后刷新父界面
+                      });
+                  }else{
+                      layer.msg(data.msg,{icon: 5});//失败的表情
+                      return;
+                  }
+              },
+              complete: function () {
+                  layer.close(this.layerIndex);
+              },
+          });
 
-      return false;
-    });
+          return false;
+      });
+
+      var id = getQueryVariable("id");
+      $.ajax({
+          url:"/web-top/sys/function/select/one",
+          type:'get',
+          data:{"id":id},
+          contentType: 'application/json',
+          beforeSend:function () {
+              this.layerIndex = layer.load(0, { shade: [0.5, '#393D49'] });
+          },
+          success:function(data){
+              console.info(data);
+              if(data.code == '0'){
+                  form.val("edit_function_form", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                      "id": data.data.id
+                      ,"title": data.data.title // "name": "value"
+                      ,"code": data.data.code
+                      ,"url": data.data.url
+                      ,"path": data.data.path
+                      ,"icon": data.data.icon
+                      ,"isHtml": data.data.isHtml
+                      ,"lev": data.data.lev
+                      ,"orderValue": data.data.orderValue
+                      ,"parentId": data.data.parentId
+                  });
+              }else{
+                  layer.msg(data.msg,{icon: 5});//失败的表情
+                  return;
+              }
+          },
+          complete: function () {
+              layer.close(this.layerIndex);
+          },
+      });
+
+
+      function getQueryVariable(variable){
+
+          var query = window.location.search.substring(1);
+          var vars = query.split("&");
+          for (var i=0;i<vars.length;i++) {
+              var pair = vars[i].split("=");
+              if(pair[0] == variable){return pair[1];}
+          }
+          return(false);
+      }
+
+
   });
 </script>
 <style scoped>
